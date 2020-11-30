@@ -6,7 +6,7 @@ Here is a repo where I share some of my practice notebook related to predictive 
 
 [Regression Prediction and Model Interpretation with PyCaret](https://nbviewer.jupyter.org/github/weishunc5/predictive_modelling/blob/main/houseprice-pycaret.ipynb)
 
-**Feature Engineering and Selection with Scikit-Learn: To Be Updated Soon**
+**Feature Engineering and Feature Selection with Scikit-Learn: To Be Updated Soon**
 
 **Hyperparameter Tuning and Model Interpretation with Scikit-Learn: To Be Updated Soon**
 
