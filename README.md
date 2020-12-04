@@ -8,7 +8,7 @@ Here is a repo where I share some of my practice notebook related to predictive 
 
 **Feature Engineering and Feature Selection with Scikit-Learn: To Be Updated Soon**
 
-**Hyperparameter Tuning and Model Interpretation with Scikit-Learn: To Be Updated Soon**
+**Hyperparameter Tuning with Scikit-Learn: To Be Updated Soon**
 
 **Text Preprocessing and Classification: To Be Updated Soon**
 
