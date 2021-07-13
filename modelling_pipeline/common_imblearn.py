@@ -52,7 +52,7 @@ def undersampler_model_comparison(name, clfs, preprocessor, X_train, y_train, X_
 	for i in range(len(name)):
 		pipe = Pipeline([ 
 			('preprocessor', preprocessor),    # you may want to put sampler at the top if too big to fit final full data
-			('sampler', RandomUnderSampler()),
+			('sampler', RandomUnderSampler(random_state = 1)),
 			('classifier', clfs[i])])
 
 		scores = cross_validate(pipe, X_train, y_train, scoring = ('accuracy', 'recall', 'f1'), cv = cv_folds)
