@@ -6,11 +6,37 @@ import matplotlib.pyplot as plt
 %matplotlib inline
 import seaborn as sns
 
+def create_preprocessor(X):
+	# numerical columns
+	num_cols = X.columns[X.dtypes != 'object'].tolist()
+	num_pipe = Pipeline([
+		('scaler', StandardScaler()), 
+		('imputer', SimpleImputer(strategy = 'median'))])
+
+	# categorical columns
+	cat_cols = X.columns[X.dtypes == 'object'].tolist()
+	cat_pipe = Pipeline([
+		('imputer', SimpleImputer(
+			missing_values = None,    # may set to default value if does not work
+			strategy = 'constant', 
+			fill_value = 'missing')), 
+		('onehot', OneHotEncoder(handle_unknown = 'ignore'))])
+
+	preprocessor = ColumnTransformer([
+		('num', num_pipe, num_cols), 
+		('cat', cat_pipe, cat_cols)], remainder = 'passthrough')
+
+	return preprocessor
+
 def get_catboost_feature_importance(catboost_pipe, X, y): 
 	catboost_pipe.fit(X, y)
 
 	# get feature names and feature importances
-	feature_names = catboost_pipe.named_steps['classifier'].feature_names_
+	num_cols = X.columns[X.dtypes != 'object'].tolist()
+	cat_cols = X.columns[X.dtypes == 'object'].tolist()
+	ohe = (catboost_pipe.named_steps['preprocessor'].named_transformers_['cat'].named_steps['onehot'])
+	ohe_names = ohe.get_feature_names(input_features = cat_cols)
+	feature_names = np.r_[num_cols, ohe_names]
 	feature_importances = catboost_pipe.named_steps['classifier'].feature_importances_
 
 	# organize into a table
