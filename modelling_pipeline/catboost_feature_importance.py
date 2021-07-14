@@ -1,4 +1,14 @@
-def get_catboost_feature_importance(pipe, X, y): 
+import pandas as pd
+import numpy as np 
+
+# visualization
+import matplotlib.pyplot as plt
+%matplotlib inline
+import seaborn as sns
+
+def get_catboost_feature_importance(catboost_pipe, X, y): 
+	catboost_pipe.fit(X, y)
+
 	# get feature names and feature importances
 	feature_names = catboost_pipe.named_steps['classifier'].feature_names_
 	feature_importances = catboost_pipe.named_steps['classifier'].feature_importances_
@@ -17,5 +27,13 @@ def visualize_feature_importance(importance_table, top, bottom):
 	subset_data = importance_table.loc[top - 1:bottom - 1, ['cols', 'normalized_predictval_change']]
 
 	# visualization
-	sns.barplot(x = 'Normalized Prediction Values Change', y = 'Features', data = subset_data)
+	sns.barplot(x = 'normalized_predictval_change', y = 'cols', data = subset_data)
 	plt.title('CatBoost Feature Importance From Rank ' + str(top) + ' to Rank ' + str(bottom))
+
+def main():
+	catboost_pipe = Pipeline([
+		('preprocessor', preprocessor), 
+		('classifier', CatBoostClassifier(verbose = False, scale_pos_weight = 3689/8312))])
+
+	importance_table = get_catboost_feature_importance(pipe, X, y)
+	visualize_feature_importance(importance_table, 1, 20)
