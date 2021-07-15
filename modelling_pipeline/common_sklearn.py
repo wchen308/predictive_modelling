@@ -69,7 +69,7 @@ def model_comparison(name, clfs, preprocessor, X_train, y_train, X_holdout, y_ho
 	return result
 
 def main_model_comparison():
-	name = ['Logistic Regression', 'Random Forest', 'XGBoost']
+	name = ['Logistic Regression', 'XGBoost']
 	clfs = [LogisticRegression(solver = 'liblinear', max_iter = 1000), 
 		xgb.XGBClassifier()]
 	preprocessor = create_preprocessor(X)
