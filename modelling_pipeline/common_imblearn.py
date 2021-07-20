@@ -10,7 +10,7 @@ from imblearn.pipeline import Pipeline
 from imblearn.under_sampling import RandomUnderSampler
 
 # modelling
-from sklearn.model_selection import cross_validate, GridSearchCV, RandomizedSearchCV
+from sklearn.model_selection import cross_validate, StratifiedKFold, GridSearchCV, RandomizedSearchCV
 from sklearn.metrics import accuracy_score, recall_score, f1_score, roc_auc_score
 from sklearn.feature_selection import SelectKBest, SelectFromModel
 from sklearn.linear_model import LogisticRegression
@@ -55,7 +55,7 @@ def undersampler_model_comparison(name, clfs, preprocessor, X_train, y_train, X_
 			('sampler', RandomUnderSampler(random_state = 1)),
 			('classifier', clfs[i])])
 
-		scores = cross_validate(pipe, X_train, y_train, scoring = ('accuracy', 'recall', 'f1'), cv = cv_folds)
+		scores = cross_validate(pipe, X_train, y_train, scoring = ('accuracy', 'recall', 'f1'), cv = StratifiedKFold(cv_folds))
 
 		cv_accuracy.append(round(scores['test_accuracy'].mean(), 5))
 		cv_recall.append(round(scores['test_recall'].mean(), 5))
