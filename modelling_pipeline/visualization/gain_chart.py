@@ -28,9 +28,10 @@ def calculate_gain_table(info_table):
 
 	return gain_table
 
-def plot_gain_chart(decile, gain):
+def plot_gain_chart(decile, gain1, gain2):
 	# plot
-	plt.plot(decile, gain, color = 'black', label = 'Modelname Gain')
+	plt.plot(decile, gain1, color = 'red', label = 'Model1 Gain')
+	plt.plot(decile, gain2, color = 'green', label = 'Model2 Gain')
 	plt.legend()
 
 	# label
